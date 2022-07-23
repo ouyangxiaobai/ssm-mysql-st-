@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.snack.mapper.OrderdetailMapper" >
+  <resultMap id="BaseResultMap" type="com.snack.model.Orderdetail" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="o_id" property="oId" jdbcType="VARCHAR" />
+    <result column="s_id" property="sId" jdbcType="INTEGER" />
+    <result column="o_num" property="oNum" jdbcType="INTEGER" />
+    <result column="o_money" property="oMoney" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    d_id, o_id, s_id, o_num, o_money
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.snack.model.OrderdetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderdetail
+    where d_id = #{dId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderdetail
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.model.OrderdetailExample" >
+    delete from orderdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.model.Orderdetail" >
+    insert into orderdetail (d_id, o_id, s_id, 
+      o_num, o_money)
+    values (#{dId,jdbcType=INTEGER}, #{oId,jdbcType=VARCHAR}, #{sId,jdbcType=INTEGER}, 
+      #{oNum,jdbcType=INTEGER}, #{oMoney,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.model.Orderdetail" >
+    insert into orderdetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="oId != null" >
+        o_id,
+      </if>
+      <if test="sId != null" >
+        s_id,
+      </if>
+      <if test="oNum != null" >
+        o_num,
+      </if>
+      <if test="oMoney != null" >
+        o_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="oId != null" >
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="sId != null" >
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="oNum != null" >
+        #{oNum,jdbcType=INTEGER},
+      </if>
+      <if test="oMoney != null" >
+        #{oMoney,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.model.OrderdetailExample" resultType="java.lang.Integer" >
+    select count(*) from orderdetail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderdetail
+    <set >
+      <if test="record.dId != null" >
+        d_id = #{record.dId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oId != null" >
+        o_id = #{record.oId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sId != null" >
+        s_id = #{record.sId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oNum != null" >
+        o_num = #{record.oNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.oMoney != null" >
+        o_money = #{record.oMoney,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderdetail
+    set d_id = #{record.dId,jdbcType=INTEGER},
+      o_id = #{record.oId,jdbcType=VARCHAR},
+      s_id = #{record.sId,jdbcType=INTEGER},
+      o_num = #{record.oNum,jdbcType=INTEGER},
+      o_money = #{record.oMoney,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.model.Orderdetail" >
+    update orderdetail
+    <set >
+      <if test="oId != null" >
+        o_id = #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="sId != null" >
+        s_id = #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="oNum != null" >
+        o_num = #{oNum,jdbcType=INTEGER},
+      </if>
+      <if test="oMoney != null" >
+        o_money = #{oMoney,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.model.Orderdetail" >
+    update orderdetail
+    set o_id = #{oId,jdbcType=VARCHAR},
+      s_id = #{sId,jdbcType=INTEGER},
+      o_num = #{oNum,jdbcType=INTEGER},
+      o_money = #{oMoney,jdbcType=DOUBLE}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectOrderdetail" resultType="com.snack.model.domain.DoSnack" parameterType="java.lang.Integer">
+    select o.d_id as dId,o.o_num as oNum,o_money as oMoney,s.s_pictureUrl as picUrl,s.s_name as sName 
+	from orderdetail o INNER JOIN snackinfo s on o.s_id=s.s_id where d_id=#{dId}
+  </select>
+  <select id="selectOrderdetailByoId" resultType="com.snack.model.Orderdetail" parameterType="java.lang.String">
+    select * from orderdetail where o_id=#{oId}
+  </select>
+  <select id="selectOrderdetailPayMoney" resultType="java.lang.Double" parameterType="java.lang.String">
+	  SELECT SUM(allMoney) payNumber from 
+	(SELECT o_num*o_money as allMoney from orderdetail where o_id=#{oId}) s
+  </select>
+  <select id="outExcelOrderDetail" resultType="com.snack.model.domain.DoExcelOrder" parameterType="java.lang.String">
+	  select od.o_id as oId,r.o_name as oName,r.o_phone as oPhone,r.o_address as oAddress,
+		s.s_name as sName,od.o_num as num ,od.o_money as money
+		from orderdetail  od 
+		LEFT JOIN snackinfo s on od.s_id = s.s_id
+		LEFT JOIN receiptinfo r on r.o_id= od.o_id
+		where od.o_id =#{oId}
+  </select>
+</mapper>

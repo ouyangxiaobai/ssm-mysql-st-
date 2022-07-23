@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.snack.mapper.IntegralMapper" >
+  <resultMap id="BaseResultMap" type="com.snack.model.Integral" >
+    <id column="i_id" property="iId" jdbcType="INTEGER" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="i_number" property="iNumber" jdbcType="INTEGER" />
+    <result column="i_time" property="iTime" jdbcType="DATE" />
+    <result column="i_dese" property="iDese" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    i_id, u_id, i_number, i_time, i_dese
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.snack.model.IntegralExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from integral
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from integral
+    where i_id = #{iId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from integral
+    where i_id = #{iId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snack.model.IntegralExample" >
+    delete from integral
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.snack.model.Integral" >
+    insert into integral (i_id, u_id, i_number, 
+      i_time, i_dese)
+    values (#{iId,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{iNumber,jdbcType=INTEGER}, 
+      #{iTime,jdbcType=DATE}, #{iDese,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.snack.model.Integral" >
+    insert into integral
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        i_id,
+      </if>
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="iNumber != null" >
+        i_number,
+      </if>
+      <if test="iTime != null" >
+        i_time,
+      </if>
+      <if test="iDese != null" >
+        i_dese,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        #{iId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="iNumber != null" >
+        #{iNumber,jdbcType=INTEGER},
+      </if>
+      <if test="iTime != null" >
+        #{iTime,jdbcType=DATE},
+      </if>
+      <if test="iDese != null" >
+        #{iDese,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snack.model.IntegralExample" resultType="java.lang.Integer" >
+    select count(*) from integral
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update integral
+    <set >
+      <if test="record.iId != null" >
+        i_id = #{record.iId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uId != null" >
+        u_id = #{record.uId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iNumber != null" >
+        i_number = #{record.iNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.iTime != null" >
+        i_time = #{record.iTime,jdbcType=DATE},
+      </if>
+      <if test="record.iDese != null" >
+        i_dese = #{record.iDese,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update integral
+    set i_id = #{record.iId,jdbcType=INTEGER},
+      u_id = #{record.uId,jdbcType=INTEGER},
+      i_number = #{record.iNumber,jdbcType=INTEGER},
+      i_time = #{record.iTime,jdbcType=DATE},
+      i_dese = #{record.iDese,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snack.model.Integral" >
+    update integral
+    <set >
+      <if test="uId != null" >
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="iNumber != null" >
+        i_number = #{iNumber,jdbcType=INTEGER},
+      </if>
+      <if test="iTime != null" >
+        i_time = #{iTime,jdbcType=DATE},
+      </if>
+      <if test="iDese != null" >
+        i_dese = #{iDese,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snack.model.Integral" >
+    update integral
+    set u_id = #{uId,jdbcType=INTEGER},
+      i_number = #{iNumber,jdbcType=INTEGER},
+      i_time = #{iTime,jdbcType=DATE},
+      i_dese = #{iDese,jdbcType=VARCHAR}
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 积分分页 -->
+  <select id="selectIntegralLimit" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from integral i where i.u_id=#{uId}
+    ORDER BY i_time DESC LIMIT #{pageStart},#{pageSize} 
+  </select>
+</mapper>
